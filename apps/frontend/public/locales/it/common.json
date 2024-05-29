@@ -1,0 +1,8 @@
+{
+  "login": "Accesso",
+  "email": "Email",
+  "password": "Password",
+  "forgotPassword": "Hai dimenticato la tua password?",
+  "noAccount": "Non hai un account?",
+  "register": "Registrarsi"
+}
