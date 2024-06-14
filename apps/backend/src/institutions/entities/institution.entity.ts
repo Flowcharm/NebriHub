@@ -1,20 +1,20 @@
 // institutions/institution.entity.ts
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
-@Entity({ name: 'Institution' })
+@Entity()
 export class Institution {
-  @PrimaryGeneratedColumn({ type: 'int' })
+  @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'varchar' })
+  @Column()
   name: string;
 
-  @Column({ type: 'varchar' })
+  @Column()
   acronym: string;
 
-  @Column({ type: 'boolean' })
+  @Column()
   currently_working: boolean;
 
-  @Column({ type: 'varchar' })
+  @Column()
   link_to_server: string;
 }
