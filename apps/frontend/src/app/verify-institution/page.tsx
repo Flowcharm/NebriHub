@@ -1,17 +1,46 @@
 "use client";
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 export default function VerifyInstitutionPage() {
   const router = useRouter();
-  const { institution } = router.query;
+  const institution: string = "Instituto Nebrija de Formación Profesional";
 
   return (
-    <div className="flex items-center justify-center h-screen">
-      <div className="p-6 bg-white shadow-md rounded">
-        <h1 className="text-2xl font-bold mb-4">Verificar Institución</h1>
-        <p>Seleccionaste: {institution}</p>
-        <p>Continúa con el proceso de verificación para tu institución.</p>
-      </div>
+    <div className="relative flex items-center justify-center h-screen bg-cover bg-center" style={{ backgroundImage: "url('/login-cover.jpg')" }}>
+      <div className="absolute inset-0 bg-black bg-opacity-40 backdrop-blur-sm"></div>
+      <Card className="w-full max-w-md z-10">
+        <CardHeader>
+          <CardTitle>Verificación de tu organización</CardTitle>
+          <CardDescription>
+            {institution}
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="-mt-3">
+          <p>
+            El administrador de tu organización acaba de recibir tu solicitud para
+            entrar al NebriCalendar, cuando seas aceptado te enviaremos un correo
+            electrónico informándote que ya tienes acceso a la plataforma.
+          </p>
+        </CardContent>
+        <CardFooter className="flex justify-around">
+          <Button variant="outline">
+            <Link href="/register-student">Ir al registro</Link>
+          </Button>
+          <Button>
+            <Link href="/login">Ir al inicio de sesión</Link>
+          </Button>
+        </CardFooter>
+      </Card>
     </div>
   );
 }
