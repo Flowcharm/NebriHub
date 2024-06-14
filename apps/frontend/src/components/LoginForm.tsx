@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { Mail, RectangleEllipsis } from 'lucide-react';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation'; // Correct import
+import { useRouter } from 'next/navigation';
 import { Separator } from "@/components/ui/separator"
 
 export default function LoginForm() {
@@ -24,8 +24,7 @@ export default function LoginForm() {
       setMessage('Login start');
       await axios.post('http://localhost:3005/auth/login', { email, password }, { withCredentials: true });
       setMessage('Login successful');
-      console.log("Ayuda por favor");
-      router.push('/dashboard'); // Correct navigation
+      router.push('/dashboard');
     } catch (error: any) {
       setMessage(`Login failed: ${error.response?.data?.message || 'An error occurred'}`);
     }

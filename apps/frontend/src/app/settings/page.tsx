@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link"
 import {
   CalendarDays,
@@ -7,7 +9,6 @@ import {
   Settings,
   Users2,
 } from 'lucide-react';
-import 'emoji-picker-element';
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -23,6 +24,9 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 import * as React from 'react';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import { useState } from 'react';
+import { Separator } from '@/components/ui/separator';
+import Header from '@/components/Header';
 
 export default function SettingsPage() {
   return (
@@ -33,8 +37,11 @@ export default function SettingsPage() {
 }
 
 export function SettingsComponent() {
+  const [userStatus, setUserStatus] = useState<string>('');
+
   return (
     <div className="flex min-h-screen w-full flex-col">
+      <Header />
       <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-background sm:flex">
         <nav className="flex flex-col items-center gap-4 px-2 sm:py-4">
           <Link
@@ -136,14 +143,25 @@ export function SettingsComponent() {
               </CardHeader>
               <CardContent>
                 <form>
+                  <div className="flex justify-around mb-2">
+                    <div>
+                      <Label className="text-gray-800">Nombre</Label>
+                      <Input className="" placeholder={/*userName*/ "Pedro"} />
+                    </div>
+                    <div>
+                      <Label className="text-gray-800">Apellidos</Label>
+                      <Input className="" placeholder={/*userName*/ "García"} />
+                    </div>
+                  </div>
+                    <Separator />
                   <Label className="text-gray-800">Nombre de usuario</Label>
                   <Input className="mb-2" placeholder={/*userName*/ "pedrxgarcia"} />
-
                   <Label className="text-gray-800">Estado</Label>
                   <div className="flex justify-between">
                     <Textarea
-                      placeholder={/*userName*/ 'Pon aquí tu estado!'}
-                      value="" />
+                      placeholder={/*currentStatus*/ 'Pon aquí tu estado!'}
+                      value={userStatus}
+                      onChange={(e) => setUserStatus(e.target.value)} />
                   </div>
                 </form>
               </CardContent>

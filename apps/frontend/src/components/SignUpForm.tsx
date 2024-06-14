@@ -1,12 +1,13 @@
 "use client";
 
-import { useState, FormEvent } from "react";
-import { useRouter } from 'next/navigation'; // Correct import
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import Link from "next/link";
-import Image from "next/image";
+import { useState, FormEvent } from 'react';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import Link from 'next/link';
+import Image from 'next/image';
 import InstitutionDropdown from './InstitutionDropdown';
 import { Separator } from '@/components/ui/separator';
 
@@ -23,10 +24,17 @@ export default function SignUpForm({ userType }: { userType: string }) {
     e.preventDefault();
 
     try {
+      await axios.post('http://localhost:3005/auth/register', {
+        email,
+        password,
+        firstName,
+        lastName,
+        institution,
+      }, { withCredentials: true });
       setMessage('Registration successful');
-      router.push('/verify-institution'); // Redirect to the verify institution page
+      router.push('/verify-institution');
     } catch (error: any) {
-      setMessage(`Registration failed: ${error.response.data.message}`);
+      setMessage(`Registration failed: ${error.response?.data?.message || 'An error occurred'}`);
     }
   };
 
@@ -85,7 +93,6 @@ export default function SignUpForm({ userType }: { userType: string }) {
             required
           />
         </div>
-        <Label htmlFor="select" className="-mb-2">Tu organización</Label>
         <InstitutionDropdown onSelect={setInstitution} />
         <Button type="submit" className="w-full">
           Crear cuenta
