@@ -1,8 +1,7 @@
-// users/user.entity.ts
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity()
-export class User {
+export class NewUser {
   @PrimaryGeneratedColumn()
   id: number;
 

@@ -1,11 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
 import * as bcrypt from 'bcrypt';
 import * as nodemailer from 'nodemailer';
-import { UserService } from '../users/users.service';
+import { UsersService } from '../users/users.service';
 import { Response } from 'express';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -13,7 +13,7 @@ import { v4 as uuidv4 } from 'uuid';
 export class AuthService {
   constructor(
     private readonly jwtService: JwtService,
-    private readonly userService: UserService,
+    private readonly userService: UsersService,
     private readonly configService: ConfigService,
   ) {}
 
@@ -26,42 +26,27 @@ export class AuthService {
     return null;
   }
 
-  async login(loginDto: LoginDto, res: Response) {
+  async login(loginDto: LoginDto): Promise<string> {
     const user = await this.validateUser(loginDto.email, loginDto.password);
     if (!user) {
-      throw new Error('Invalid credentials');
+      throw new UnauthorizedException('Invalid credentials');
     }
     const payload = { email: user.email, sub: user.id };
-    const token = this.jwtService.sign(payload, {
+    return this.jwtService.sign(payload, {
       secret: this.configService.get<string>('JWT_SECRET'),
     });
-
-    res.cookie('token', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
-    });
-    return { message: 'Login successful' };
   }
 
-  async register(registerDto: RegisterDto, res: Response) {
+  async register(registerDto: RegisterDto): Promise<string> {
     const hashedPassword = await bcrypt.hash(registerDto.password, 10);
     const user = await this.userService.create({
-      email: registerDto.email,
+      ...registerDto,
       password: hashedPassword,
-      first_name: registerDto.firstName,
-      last_name: registerDto.lastName,
     });
     const payload = { email: user.email, sub: user.id };
-    const token = this.jwtService.sign(payload, {
+    return this.jwtService.sign(payload, {
       secret: this.configService.get<string>('JWT_SECRET'),
     });
-    res.cookie('token', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
-    });
-    return { message: 'Registration successful' };
   }
 
   async sendPasswordResetEmail(email: string) {

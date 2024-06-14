@@ -3,7 +3,7 @@ import { join } from 'path';
 
 export const typeOrmConfig: TypeOrmModuleOptions = {
   type: 'postgres',
-  host: 'localhost',
+  host: '127.0.0.1',
   port: 5432,
   username: 'diegxherrera',
   password: 'diegxherrera',

@@ -1,97 +1,61 @@
 import { Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { Pool } from 'pg';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository, MoreThan } from 'typeorm';
+import { User } from './users.entity';
+import { NewUser } from './newusers.entity';
 
 @Injectable()
-export class UserService {
-  private pool: Pool;
+export class UsersService {
+  constructor(
+    @InjectRepository(User)
+    private userRepository: Repository<User>,
+    @InjectRepository(NewUser)
+    private newUserRepository: Repository<NewUser>,
+  ) {}
 
-  constructor(private configService: ConfigService) {
-    this.pool = new Pool({
-      user: this.configService.get<string>('DB_USER'),
-      host: this.configService.get<string>('DB_HOST'),
-      database: this.configService.get<string>('DB_NAME'),
-      password: this.configService.get<string>('DB_PASS'),
-      port: parseInt(this.configService.get<string>('DB_PORT'), 10),
+  async findByEmail(email: string): Promise<User | undefined> {
+    return this.userRepository.findOne({ where: { email } });
+  }
+
+  async create(userData: Partial<NewUser>): Promise<NewUser> {
+    const newUser = this.newUserRepository.create(userData);
+    return this.newUserRepository.save(newUser);
+  }
+
+  async findAll(): Promise<User[]> {
+    return this.userRepository.find();
+  }
+
+  async findOne(id: string): Promise<User> {
+    return this.userRepository.findOne({ where: { id: parseInt(id, 10) } });
+  }
+
+  async remove(id: string): Promise<void> {
+    await this.userRepository.delete(id);
+  }
+
+  async updatePassword(userId: number, hashedPassword: string): Promise<void> {
+    await this.userRepository.update(userId, { password: hashedPassword });
+  }
+
+  async clearPasswordResetToken(userId: number): Promise<void> {
+    await this.userRepository.update(userId, {
+      resetToken: null,
+      resetTokenExpiry: null,
     });
   }
 
-  async findByEmail(email: string) {
-    const client = await this.pool.connect();
-    try {
-      const res = await client.query('SELECT * FROM users WHERE email = $1', [
-        email,
-      ]);
-      return res.rows[0];
-    } finally {
-      client.release();
-    }
+  async findUserIdByResetToken(token: string): Promise<number | undefined> {
+    const user = await this.userRepository.findOne({
+      where: { resetToken: token, resetTokenExpiry: MoreThan(new Date()) },
+    });
+    return user ? user.id : undefined;
   }
 
-  async create(userData: any) {
-    const client = await this.pool.connect();
-    try {
-      const res = await client.query(
-        'INSERT INTO users (email, password, first_name, last_name, created_at) VALUES ($1, $2, $3, $4, NOW()) RETURNING *',
-        [
-          userData.email,
-          userData.password,
-          userData.first_name,
-          userData.last_name,
-        ],
-      );
-      return res.rows[0];
-    } finally {
-      client.release();
-    }
-  }
-
-  async savePasswordResetToken(userId: number, token: string) {
-    const client = await this.pool.connect();
-    try {
-      await client.query(
-        "UPDATE users SET reset_token = $1, reset_token_expiry = NOW() + INTERVAL '1 hour' WHERE id = $2",
-        [token, userId],
-      );
-    } finally {
-      client.release();
-    }
-  }
-
-  async findUserIdByResetToken(token: string) {
-    const client = await this.pool.connect();
-    try {
-      const res = await client.query(
-        'SELECT id FROM users WHERE reset_token = $1 AND reset_token_expiry > NOW()',
-        [token],
-      );
-      return res.rows[0]?.id;
-    } finally {
-      client.release();
-    }
-  }
-
-  async updatePassword(userId: number, hashedPassword: string) {
-    const client = await this.pool.connect();
-    try {
-      await client.query('UPDATE users SET password = $1 WHERE id = $2', [
-        hashedPassword,
-        userId,
-      ]);
-    } finally {
-      client.release();
-    }
-  }
-
-  async clearPasswordResetToken(userId: number) {
-    const client = await this.pool.connect();
-    try {
-      await client.query(
-        'UPDATE users SET reset_token = NULL, reset_token_expiry = NULL WHERE id = $1',
-        [userId],
-      );
-    } finally {
-      client.release();
-    }
+  async savePasswordResetToken(userId: number, token: string): Promise<void> {
+    await this.userRepository.update(userId, {
+      resetToken: token,
+      resetTokenExpiry: new Date(Date.now() + 3600000), // 1 hour from now
+    });
   }
 }

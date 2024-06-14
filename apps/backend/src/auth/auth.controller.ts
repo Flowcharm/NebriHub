@@ -17,12 +17,24 @@ export class AuthController {
 
   @Post('login')
   async login(@Body() loginDto: LoginDto, @Res() res: Response) {
-    return this.authService.login(loginDto, res);
+    const token = await this.authService.login(loginDto);
+    res.cookie('token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+    });
+    return res.send({ token }); // Ensure token is returned in response body
   }
 
   @Post('register')
   async register(@Body() registerDto: RegisterDto, @Res() res: Response) {
-    return this.authService.register(registerDto, res);
+    const token = await this.authService.register(registerDto);
+    res.cookie('token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+    });
+    return res.send({ token }); // Ensure token is returned in response body
   }
 
   @Post('forgot-password')
