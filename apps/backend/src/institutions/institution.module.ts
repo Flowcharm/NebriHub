@@ -3,7 +3,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { InstitutionsService } from './institution.service';
 import { InstitutionsController } from './institution.controller';
-import { Institution } from './institution.entity';
+import { Institution } from './entities/institution.entity';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Institution])],
