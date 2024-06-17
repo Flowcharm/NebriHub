@@ -17,10 +17,10 @@ export class User {
   @Column()
   lastName: string;
 
-  @Column()
+  @Column({ nullable: true })
   class: string;
 
-  @Column('simple-array')
+  @Column('simple-array', { nullable: true })
   subjects: string[];
 
   @Column({ nullable: true })

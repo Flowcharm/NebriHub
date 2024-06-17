@@ -18,14 +18,14 @@ export default function VerifyInstitutionPage() {
   return (
     <div className="relative flex items-center justify-center h-screen bg-cover bg-center" style={{ backgroundImage: "url('/login-cover.jpg')" }}>
       <div className="absolute inset-0 bg-black bg-opacity-40 backdrop-blur-sm"></div>
-      <Card className="w-full max-w-md z-10">
+      <Card className="w-full max-w-md z-10 font-wei">
         <CardHeader>
           <CardTitle>Verificación de tu organización</CardTitle>
           <CardDescription>
             {institution}
           </CardDescription>
         </CardHeader>
-        <CardContent className="-mt-3">
+        <CardContent className="-mt-3 wei">
           <p>
             El administrador de tu organización acaba de recibir tu solicitud para
             entrar al NebriCalendar, cuando seas aceptado te enviaremos un correo

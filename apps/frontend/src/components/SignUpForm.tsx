@@ -8,8 +8,9 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import Link from 'next/link';
 import Image from 'next/image';
-import InstitutionDropdown from './InstitutionDropdown';
+import InstitutionDropdown from './GeneralSelect';
 import { Separator } from '@/components/ui/separator';
+import GeneralSelect from "./GeneralSelect";
 
 export default function SignUpForm({ userType }: { userType: string }) {
   const [email, setEmail] = useState<string>('');
@@ -93,7 +94,7 @@ export default function SignUpForm({ userType }: { userType: string }) {
             required
           />
         </div>
-        <InstitutionDropdown onSelect={setInstitution} />
+        <GeneralSelect type={"institutions"} onSelect={setInstitution}  size={"large"} usingLabel={true}/>
         <Button type="submit" className="w-full">
           Crear cuenta
         </Button>
@@ -124,7 +125,7 @@ export default function SignUpForm({ userType }: { userType: string }) {
       {message && <p className="mt-4 text-center text-sm">{message}</p>}
       <div className="mt-4 text-center text-sm">
         ¿Ya tienes una cuenta?{" "}
-        <Link href="/login" className="underline">
+        <Link href={"/login"} className="underline">
           Iniciar sesión
         </Link>
       </div>

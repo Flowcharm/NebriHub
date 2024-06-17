@@ -22,11 +22,13 @@ export default function LoginForm() {
 
     try {
       setMessage('Login start');
-      await axios.post('http://localhost:3005/auth/login', { email, password }, { withCredentials: true });
-      setMessage('Login successful');
+      const response = await axios.post('http://localhost:3005/auth/login', { email, password }, { withCredentials: true });
+      const { token } = response.data;
+      document.cookie = `token=${token}; path=/; secure; sameSite=strict;`;
       router.push('/dashboard');
     } catch (error: any) {
       setMessage(`Login failed: ${error.response?.data?.message || 'An error occurred'}`);
+      // Create a toast or other UI component showing error in login
     }
   };
 
@@ -59,7 +61,7 @@ export default function LoginForm() {
               <Label htmlFor="password">Contraseña</Label>
               <RectangleEllipsis className="ml-2 h-4 w-4.5" />
             </div>
-            <Link href="/forgot-password" className="ml-auto inline-block text-sm underline">
+            <Link href={"/forgot-password"} className="ml-auto inline-block text-sm underline">
               ¿Olvidaste tu contraseña?
             </Link>
           </div>
@@ -101,7 +103,7 @@ export default function LoginForm() {
       {message && <p className="mt-4 text-center text-sm">{message}</p>}
       <div className="mt-4 text-center text-sm">
         ¿No tienes una cuenta?{" "}
-        <Link href="/register-student" className="underline">
+        <Link href={"/register-student"} className="underline">
           Registrarse
         </Link>
       </div>

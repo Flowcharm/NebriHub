@@ -111,60 +111,6 @@ export function AsideMenu() {
           </Tooltip>
         </nav>
       </aside>
-      <Sheet>
-        <SheetTrigger asChild>
-          <Button size="icon" variant="outline" className="sm:hidden">
-            <PanelLeft className="h-5 w-5" />
-            <span className="sr-only">Toggle Menu</span>
-          </Button>
-        </SheetTrigger>
-        <SheetContent side="left" className="sm:max-w-xs">
-          <nav className="grid gap-6 text-lg font-medium">
-            <Link href="/dashboard" >
-              <div className={`group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full text-lg font-semibold md:text-base ${pathName === '/dashboard' ? 'bg-primary text-primary-foreground' : 'bg-background text-muted-foreground'}`}>
-                <Home className={`h-5 w-5 transition-all group-hover:scale-110 ${pathName === '/dashboard' ? 'text-primary-foreground' : ''}`} />
-                <span className="sr-only">NebriCalendar</span>
-              </div>
-            </Link>
-            <Link href="/calendar" >
-              <div className={`flex items-center gap-4 px-2.5 transition-colors ${pathName === '/calendar' ? 'text-foreground' : 'text-muted-foreground'}`}>
-                <CalendarDays className="h-5 w-5" />
-                Calendario
-              </div>
-            </Link>
-            <Link href="/projects" >
-              <div className={`flex items-center gap-4 px-2.5 transition-colors ${pathName === '/projects' ? 'text-foreground' : 'text-muted-foreground'}`}>
-                <PanelsTopLeft className="h-5 w-5" />
-                Proyectos
-              </div>
-            </Link>
-            <Link href="/attendance" >
-              <div className={`flex items-center gap-4 px-2.5 transition-colors ${pathName === '/attendance' ? 'text-foreground' : 'text-muted-foreground'}`}>
-                <Users2 className="h-5 w-5" />
-                Asistencia
-              </div>
-            </Link>
-            <Link href="/members" >
-              <div className={`flex items-center gap-4 px-2.5 transition-colors ${pathName === '/members' ? 'text-foreground' : 'text-muted-foreground'}`}>
-                <Users2 className="h-5 w-5" />
-                Miembros
-              </div>
-            </Link>
-            <Link href="/statistics" >
-              <div className={`flex items-center gap-4 px-2.5 transition-colors ${pathName === '/statistics' ? 'text-foreground' : 'text-muted-foreground'}`}>
-                <LineChart className="h-5 w-5" />
-                Estadísticas
-              </div>
-            </Link>
-            <Link href="/settings" >
-              <div className={`flex items-center gap-4 px-2.5 transition-colors ${pathName === '/settings' ? 'text-foreground' : 'text-muted-foreground'}`}>
-                <Settings className="h-5 w-5" />
-                Configuración
-              </div>
-            </Link>
-          </nav>
-        </SheetContent>
-      </Sheet>
     </>
   );
 }
