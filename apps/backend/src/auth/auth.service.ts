@@ -6,7 +6,6 @@ import { RegisterDto } from './dto/register.dto';
 import * as bcrypt from 'bcrypt';
 import * as nodemailer from 'nodemailer';
 import { UsersService } from '../users/users.service';
-import { Response } from 'express';
 import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()

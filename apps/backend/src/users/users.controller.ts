@@ -1,3 +1,4 @@
+// users/users.controller.ts
 import { Controller, Get, Param, Delete, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { User } from './entities/users.entity';
@@ -16,7 +17,7 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   @Get(':id')
   findOne(@Param('id') id: string): Promise<User> {
-    return this.usersService.findOne(id);
+    return this.usersService.findById(id);
   }
 
   @UseGuards(JwtAuthGuard)

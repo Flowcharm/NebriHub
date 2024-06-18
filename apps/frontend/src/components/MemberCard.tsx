@@ -1,3 +1,4 @@
+"use client";
 import * as React from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -8,6 +9,17 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 import Image from "next/image";
 import GeneralSelect from "@/components/GeneralSelect";
 import { FormEvent, useState } from "react";
@@ -48,14 +60,14 @@ export default function MemberCard() {
     };
 
     return (
-        <Card className="w-[350px] mt-10">
+        <Card className="w-[300px] mt-10">
             <CardHeader className="flex flex-col items-center">
                 <Image
                     src="/example_pfp.jpeg"
-                    width={70}
-                    height={70}
+                    width={80}
+                    height={80}
                     alt="Avatar"
-                    className="overflow-hidden rounded-full"
+                    className="overflow-hidden rounded-full mb-1"
                 />
                 <CardTitle>Pedro García Sánchez</CardTitle>
                 {!isEditingClass ? (
@@ -81,7 +93,22 @@ export default function MemberCard() {
                 </form>
             </CardContent>
             <CardFooter className="flex justify-between">
-                <Button variant="outline">Cancelar</Button>
+                <AlertDialog>
+                    <AlertDialogTrigger><Button variant="outline">Cancelar</Button></AlertDialogTrigger>
+                    <AlertDialogContent>
+                        <AlertDialogHeader>
+                            <AlertDialogTitle>¿Estás seguro?</AlertDialogTitle>
+                            <AlertDialogDescription>
+                                Esta acción eliminará todas las modificaciones sin guardar.
+                            </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                            <AlertDialogCancel>Ir atrás</AlertDialogCancel>
+                            <AlertDialogAction>Continuar</AlertDialogAction>
+                        </AlertDialogFooter>
+                    </AlertDialogContent>
+                </AlertDialog>
+
                 <Button>Actualizar</Button>
             </CardFooter>
         </Card>

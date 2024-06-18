@@ -118,13 +118,13 @@ export default function Header() {
         <BreadcrumbList>
           <BreadcrumbItem>
             <BreadcrumbLink asChild>
-              <Link href="#">Instituto Nebrija de Formación Profesional</Link>
+              <Link href="/dashboard">Instituto Nebrija de Formación Profesional</Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
             <BreadcrumbLink asChild>
-              <Link href="/">{spanishPathName}</Link>
+              <Link href={pathname}>{spanishPathName}</Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
         </BreadcrumbList>

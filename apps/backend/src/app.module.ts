@@ -1,10 +1,10 @@
-// app.module.ts
-import { Module } from '@nestjs/common';
+import { Module, MiddlewareConsumer, NestModule } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { InstitutionModule } from './institutions/institution.module';
+import { JwtMiddleware } from './auth/middleware/jwt.middleware';
 
 @Module({
   imports: [
@@ -28,4 +28,8 @@ import { InstitutionModule } from './institutions/institution.module';
   controllers: [],
   providers: [],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(JwtMiddleware).forRoutes('*'); // Apply middleware to all routes or specify your routes
+  }
+}

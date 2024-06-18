@@ -23,7 +23,7 @@ export class AuthController {
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict',
     });
-    return res.send({ token }); // Ensure token is returned in response body
+    return res.send({ token });
   }
 
   @Post('register')
@@ -34,7 +34,7 @@ export class AuthController {
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict',
     });
-    return res.send({ token }); // Ensure token is returned in response body
+    return res.send({ token });
   }
 
   @Post('forgot-password')

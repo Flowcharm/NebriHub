@@ -57,6 +57,7 @@ import Header from '@/components/Header';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import BigCalendar from "@/components/BigCalendar";
 export default function Dashboard() {
   return (
     <TooltipProvider>
@@ -225,17 +226,7 @@ export function DashboardComponent() {
               <Button>Añadir nuevo profesor</Button>
             </CardFooter>
           </Card>
-          <Card className="w-full">
-            <CardHeader className="pb-3">
-              <CardTitle>Tus profesores</CardTitle>
-              <CardDescription className="max-w-lg text-balance leading-relaxed">
-                <AvatarIcon />
-              </CardDescription>
-            </CardHeader>
-            <CardFooter>
-              <Button>Añadir nuevo profesor</Button>
-            </CardFooter>
-          </Card>
+          <BigCalendar />
         </main>
       </div>
     </div>
