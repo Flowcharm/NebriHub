@@ -1,19 +1,36 @@
-import { useState, useEffect } from 'react';
+"use client";
+
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Check, ChevronsUpDown } from 'lucide-react';
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from '@/components/ui/command';
+import {
+  Drawer,
+  DrawerContent,
+  DrawerTrigger,
+} from '@/components/ui/drawer';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
+import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
+import useMediaQuery from '@custom-react-hooks/use-media-query';
+import { cn } from '@/lib/utils';
 
 interface GeneralSelectProps {
-  type: keyof SelectTypes;
-  onSelect: (value: string) => void;
-  size: 'small' | 'medium' | 'large';
-  usingLabel: boolean | undefined;
+  type: keyof SelectTypes,
+  size: 'small' | 'medium' | 'large',
+  usingLabel: boolean | undefined,
+  onSelect?: (value: (((prevState: string) => string) | string)) => void
 }
 
 interface SelectTypes {
@@ -22,9 +39,28 @@ interface SelectTypes {
   subjects: string;
 }
 
-export default function GeneralSelect({ type, onSelect, size, usingLabel }: GeneralSelectProps) {
+export default function GeneralSelect({ type, size, usingLabel, onSelect }: GeneralSelectProps) {
   const [items, setItems] = useState<string[]>([]);
   const [selectedItem, setSelectedItem] = useState<string>('');
+  const [open, setOpen] = useState(false);
+  const isDesktop = useMediaQuery('(min-width: 768px)');
+  const [isLoading, setIsLoading] = useState(true);
+  let typeTranslated = "";
+
+  switch (type) {
+    case 'classes':
+      typeTranslated = 'Clases';
+      break;
+    case 'institutions':
+      typeTranslated = 'Institución';
+      break;
+    case 'subjects':
+      typeTranslated = 'Asignaturas';
+      break;
+    default:
+      typeTranslated = 'Tipo incorrecto para el select';
+      break;
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,15 +85,20 @@ export default function GeneralSelect({ type, onSelect, size, usingLabel }: Gene
         setItems(names);
       } catch (error) {
         console.error(`Error fetching ${type}:`, error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchData();
   }, [type]);
 
-  const handleChange = (value: string) => {
+  const handleSelect = (value: string) => {
     setSelectedItem(value);
-    onSelect(value);
+    setOpen(false);
+    if (onSelect) {
+      onSelect(value);
+    }
   };
 
   const getSizeClass = () => {
@@ -73,21 +114,67 @@ export default function GeneralSelect({ type, onSelect, size, usingLabel }: Gene
     }
   };
 
+  const buttonLabel = selectedItem || `-- Elige ${typeTranslated} --`;
+
+  const content = (
+    <Command>
+      <CommandInput placeholder={`Buscar ${typeTranslated}`} />
+      <CommandList>
+        <CommandEmpty>No se encontraron: {typeTranslated}.</CommandEmpty>
+        <CommandGroup>
+          {items.map((item) => (
+            <CommandItem
+              key={item}
+              value={item}
+              onSelect={(value) => handleSelect(value)}
+            >
+              <Check
+                className={cn(
+                  'mr-2 h-4 w-4',
+                  selectedItem === item ? 'opacity-100' : 'opacity-0',
+                )}
+              />
+              {item}
+            </CommandItem>
+          ))}
+        </CommandGroup>
+      </CommandList>
+    </Command>
+  );
+
   return (
-      <div>
-        {usingLabel === true ? <Label htmlFor={type}>{`Select ${type}`}</Label> : ""}
-        <Select onValueChange={handleChange}>
-          <SelectTrigger className={getSizeClass()}>
-            <SelectValue placeholder={`-- Choose your ${type} --`} />
-          </SelectTrigger>
-          <SelectContent>
-            {items.map((item) => (
-                <SelectItem key={item} value={item}>
-                  {item}
-                </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
+    <div>
+      {usingLabel ? <Label htmlFor={type}>{`${typeTranslated}`}</Label> : ''}
+      {isLoading ? (
+        <p className="text-center">Loading...</p>
+      ) : (
+        isDesktop ? (
+          <Popover open={open} onOpenChange={setOpen}>
+            <PopoverTrigger asChild>
+              <Button variant="outline" className={`${getSizeClass()} justify-between`}>
+                {buttonLabel}
+                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className={`${getSizeClass()} p-0`}>
+              {content}
+            </PopoverContent>
+          </Popover>
+        ) : (
+          <Drawer open={open} onOpenChange={setOpen}>
+            <DrawerTrigger asChild>
+              <Button variant="outline" className={`${getSizeClass()} justify-between`}>
+                {buttonLabel}
+              </Button>
+            </DrawerTrigger>
+            <DrawerContent>
+              <div className="mt-4 border-t">
+                {content}
+              </div>
+            </DrawerContent>
+          </Drawer>
+        )
+      )}
+    </div>
   );
 }

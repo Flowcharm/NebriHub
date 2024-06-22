@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, FormEvent } from 'react';
+import React, { useState, FormEvent } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
@@ -8,7 +8,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import Link from 'next/link';
 import Image from 'next/image';
-import InstitutionDropdown from './GeneralSelect';
 import { Separator } from '@/components/ui/separator';
 import GeneralSelect from "./GeneralSelect";
 
@@ -94,7 +93,7 @@ export default function SignUpForm({ userType }: { userType: string }) {
             required
           />
         </div>
-        <GeneralSelect type={"institutions"} onSelect={setInstitution}  size={"large"} usingLabel={true}/>
+        <GeneralSelect type={"institutions"} onSelect={setInstitution} size={"large"} usingLabel={true}/>
         <Button type="submit" className="w-full">
           Crear cuenta
         </Button>

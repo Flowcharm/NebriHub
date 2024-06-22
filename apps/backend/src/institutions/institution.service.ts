@@ -11,7 +11,7 @@ export class InstitutionsService {
   ) {}
 
   async findAll(): Promise<Institution[]> {
-    console.log('findAll Service: Inizio'); // Debug log
+    console.log('findAll Service: Started'); // Debug log
     return await this.institutionRepository.find();
   }
 

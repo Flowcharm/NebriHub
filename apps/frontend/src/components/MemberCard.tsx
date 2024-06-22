@@ -94,7 +94,7 @@ export default function MemberCard() {
             </CardContent>
             <CardFooter className="flex justify-between">
                 <AlertDialog>
-                    <AlertDialogTrigger><Button variant="outline">Cancelar</Button></AlertDialogTrigger>
+                    <AlertDialogTrigger asChild><Button variant="outline">Cancelar</Button></AlertDialogTrigger>
                     <AlertDialogContent>
                         <AlertDialogHeader>
                             <AlertDialogTitle>¿Estás seguro?</AlertDialogTitle>
