@@ -1,10 +1,7 @@
+"use client";
 import { AsideMenu } from '@/components/AsideMenu';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import Header from '@/components/Header';
-import {ProjectsComponent} from "@/app/projects/page";
-import {DataTable} from "@/app/members/data-table";
-import {columns} from "@/app/members/columns";
-import {Grid} from "lucide-react";
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   AlertDialog, AlertDialogAction, AlertDialogCancel,
@@ -17,12 +14,16 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import * as React from 'react';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { useState } from 'react';
+import GeneralSelect from '@/components/GeneralSelect';
 
 interface AttendanceProps {
     type: string;
 }
 
-const userType = "";
+const userType: string = "";
 
 export default function Attendance() {
   return (
@@ -39,22 +40,54 @@ export default function Attendance() {
 }
 
 export function AttendanceComponent({ type }: AttendanceProps) {
+  const [newClassName, setNewClassName] = useState<string>('');
+
   return (
-    <div className="ml-4 sm:ml-10 mt-4 sm:mt-20 lg:mt-0">
+    <div className="ml-6 mt-5 sm:text-left sm:ml-9 lg:ml-10 lg:mt-4 md:ml-10">
       <p className="text-4xl font-bold">Asistencia</p>
-      <p className="leading-relaxed text-muted-foreground mr-4 sm:mr-10 mt-1">
-        La sección de asistencias permite controlar el absentismo y se divide
-        por tantas clases como tu institución tenga. Más abajo puedes controlar
-        la asistencia por clase. Sólo verás aquellas a las que tengas acceso.
-      </p>
-      <div className="grid gap-4 mt-8 sm:px-6 md:gap-8 lg:grid-cols-3 xl:grid-cols-3">
+      <div className="flex">
+        <p className="leading-relaxed text-muted-foreground mr-4 sm:mr-10 mt-1">
+          La sección de asistencias permite controlar el absentismo y se divide
+          por tantas clases como tu institución tenga. Abajo puedes controlar
+          la asistencia de las clases que tengas asignadas.
+        </p>
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <Button>Nueva clase</Button>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Crear una nueva clase</AlertDialogTitle>
+              <AlertDialogDescription>
+                Las clases que crees aquí serán públicas para todos aquellos a los que des acceso.
+                El coordinador y administradores de la plataforma ven todas las clases creadas
+                aún sin tenerlas asignadas.
+                <div className="my-3">
+                  <Label className="text-gray-900">Nombre de la clase</Label>
+                  <Input
+                    value={newClassName}
+                    onChange={(e) => setNewClassName(e.target.value)}
+                    required
+                  />
+                </div>
+                <GeneralSelect type={"teachers"} size={"large"} usingLabel={true} />
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancelar</AlertDialogCancel>
+              <AlertDialogAction>Continuar</AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      </div>
+      <div className="grid gap-4 mt-8 text-left md:gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
         {[...Array(6)].map((_, index) => (
           <Card key={index} className="w-full">
-            <CardHeader className="pb-3">
-              <CardTitle>1º DAM G2</CardTitle>
-              <CardDescription className="max-w-lg text-balance leading-relaxed">
-                Aquí aparecerán los profesores a los que asignar las clases a impartir.
-              </CardDescription>
+            <CardHeader className="flex pb-3">
+              <CardTitle className="text-xl">1º DAM G2</CardTitle>
+              <div className="block">
+                {"Active now"}
+              </div>
             </CardHeader>
             <CardFooter>
               <AlertDialog>

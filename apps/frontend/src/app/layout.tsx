@@ -7,8 +7,8 @@ const inter = Inter({ subsets: ["latin"] });
 
 // Define metadata for your application
 export const metadata: Metadata = {
-  title: "NebriCalendar",
-  description: "Manage your calendar efficiently",
+  title: "NebriHub",
+  description: "Manage your organization efficiently",
 };
 
 // RootLayout component to structure the HTML document
@@ -19,7 +19,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es">
-    {/* Apply the Inter font to the body element */}
     <body className={inter.className}>
     {children}
     </body>

@@ -37,6 +37,7 @@ interface SelectTypes {
   classes: string;
   institutions: string;
   subjects: string;
+  teachers: string;
 }
 
 export default function GeneralSelect({ type, size, usingLabel, onSelect }: GeneralSelectProps) {
@@ -75,6 +76,9 @@ export default function GeneralSelect({ type, size, usingLabel, onSelect }: Gene
             break;
           case 'subjects':
             url = 'http://localhost:3005/subjects';
+            break;
+          case 'teachers':
+            url = 'http://localhost:3005/teachers';
             break;
           default:
             throw new Error('Unknown type');

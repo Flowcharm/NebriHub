@@ -5,6 +5,7 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { InstitutionModule } from './institutions/institution.module';
 import { JwtMiddleware } from './auth/middleware/jwt.middleware';
+import { TeacherModule } from './teachers/teacher.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { JwtMiddleware } from './auth/middleware/jwt.middleware';
     AuthModule,
     UsersModule,
     InstitutionModule,
+    TeacherModule,
   ],
   controllers: [],
   providers: [],

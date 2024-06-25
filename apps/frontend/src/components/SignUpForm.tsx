@@ -31,7 +31,6 @@ export default function SignUpForm({ userType }: { userType: string }) {
         lastName,
         institution,
       }, { withCredentials: true });
-      setMessage('Registration successful');
       router.push('/verify-institution');
     } catch (error: any) {
       setMessage(`Registration failed: ${error.response?.data?.message || 'An error occurred'}`);
