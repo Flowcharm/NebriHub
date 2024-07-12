@@ -17,7 +17,7 @@ export class TeacherService {
 
   async findOne(id: string): Promise<Teacher> {
     return this.teacherRepository.findOne({
-      where: { id_teacher: parseInt(id, 10) },
+      where: { id: parseInt(id, 10) },
     });
   }
 
