@@ -1,8 +1,6 @@
-import { Body, Controller, Delete, Get, Param, Post, Res } from '@nestjs/common';
+import { Controller, Delete, Get, Param } from '@nestjs/common';
 import { TeacherService } from './teacher.service';
-import { Teacher } from './entities/teacher.entity';
-import { RegisterDto } from '../auth/dto/register.dto';
-import { Response } from 'express';
+import { Teacher } from '../entities/teacher.entity';
 
 @Controller('teachers')
 export class TeacherController {

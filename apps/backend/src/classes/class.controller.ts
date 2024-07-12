@@ -1,6 +1,6 @@
 import { Controller, Delete, Get, Param } from '@nestjs/common';
 import { ClassService } from './class.service';
-import { InstitutionClass } from './entities/class.entity';
+import { InstitutionClass } from '../entities/class.entity';
 
 @Controller('classes')
 export class ClassController {

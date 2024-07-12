@@ -1,8 +1,7 @@
-// institutions/institution.entity.ts
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity()
-export class Institution {
+export class InstitutionClass {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -10,11 +9,11 @@ export class Institution {
   name: string;
 
   @Column()
+  current_year: string;
+
+  @Column()
   acronym: string;
 
   @Column()
   currently_working: boolean;
-
-  @Column()
-  link_to_server: string;
 }

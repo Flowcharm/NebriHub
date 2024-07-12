@@ -1,13 +1,12 @@
-// institutions/institution.module.ts
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { InstitutionsService } from './institution.service';
-import { InstitutionsController } from './institution.controller';
-import { Institution } from './entities/institution.entity';
+import { InstitutionService } from './institution.service';
+import { InstitutionController } from './institution.controller';
+import { Institution } from '../entities/institution.entity';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Institution])],
-  providers: [InstitutionsService],
-  controllers: [InstitutionsController],
+  providers: [InstitutionService],
+  controllers: [InstitutionController],
 })
 export class InstitutionModule {}

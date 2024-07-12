@@ -58,6 +58,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import BigCalendar from "@/components/BigCalendar";
+import ActivityCard from '@/components/ActivityCard';
 export default function Dashboard() {
   return (
     <TooltipProvider>
@@ -227,6 +228,7 @@ export function DashboardComponent() {
             </CardFooter>
           </Card>
           <BigCalendar />
+          <ActivityCard />
         </main>
       </div>
     </div>

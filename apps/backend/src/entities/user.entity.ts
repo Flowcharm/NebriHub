@@ -20,9 +20,6 @@ export class User {
   @Column({ nullable: true })
   class: string;
 
-  @Column('simple-array', { nullable: true })
-  subjects: string[];
-
   @Column({ nullable: true })
   resetToken: string;
 

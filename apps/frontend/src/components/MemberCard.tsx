@@ -77,7 +77,6 @@ export default function MemberCard() {
                 ) : (
                     <GeneralSelect
                         type="classes"
-                        onSelect={handleClassSelect}
                         size="small"
                         usingLabel={false}
                     />
