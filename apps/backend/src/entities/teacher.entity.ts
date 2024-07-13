@@ -4,8 +4,10 @@ import {
   Column,
   ManyToMany,
   JoinTable,
+  OneToMany,
 } from 'typeorm';
 import { Subject } from './subject.entity';
+import { InstitutionClass } from './class.entity';
 
 @Entity()
 export class Teacher {
@@ -18,7 +20,13 @@ export class Teacher {
   @Column()
   surname: string;
 
+  @OneToMany(
+    () => InstitutionClass,
+    (institutionClass) => institutionClass.tutor,
+  )
+  classes: InstitutionClass[]; // Relación Profesor (Tutor) - Clase/s
+
   @ManyToMany(() => Subject)
   @JoinTable()
-  subjects: Subject[];
+  subjects: Subject[]; // Relación Profesor - Asignaturas
 }

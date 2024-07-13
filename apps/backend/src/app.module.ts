@@ -8,6 +8,7 @@ import { JwtMiddleware } from './auth/middleware/jwt.middleware';
 import { TeacherModule } from './teachers/teacher.module';
 import { SubjectModule } from './subjects/subject.module';
 import { StudentModule } from './students/student.module';
+import { ClassModule } from './classes/class.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { StudentModule } from './students/student.module';
     TeacherModule,
     StudentModule,
     SubjectModule,
+    ClassModule,
   ],
   controllers: [],
   providers: [],

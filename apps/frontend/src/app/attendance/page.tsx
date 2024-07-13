@@ -1,6 +1,6 @@
 "use client";
 import { AsideMenu } from '@/components/AsideMenu';
-import { TooltipProvider } from '@/components/ui/tooltip';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import Header from '@/components/Header';
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import {
@@ -81,12 +81,23 @@ export function AttendanceComponent({ type }: AttendanceProps) {
         </AlertDialog>
       </div>
       <div className="grid gap-4 mt-8 text-left md:gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
-        {[...Array(6)].map((_, index) => (
+        {[...Array(12)].map((_, index) => (
           <Card key={index} className="w-full">
             <CardHeader className="flex pb-3">
-              <CardTitle className="text-xl">1º DAM G2</CardTitle>
+              <CardTitle className="text-xl">
+                <TooltipProvider>
+                  <Tooltip delayDuration={750}>
+                    <TooltipTrigger>
+                      { "Nombre de la clase" }
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p className=""> { "1º Desarrollo de Aplicaciones Multiplataforma Grupo 2" } </p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </CardTitle>
               <div className="block">
-                {"Active now"}
+                {"Funcionando"}
               </div>
             </CardHeader>
             <CardFooter>
