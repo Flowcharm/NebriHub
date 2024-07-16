@@ -24,8 +24,8 @@ export class Subject {
   classes: InstitutionClass[]; // Relación Asignatura - Clase
 
   @ManyToMany(() => Student, (student) => student.subjects)
-  students: Student[];
+  students: Student[]; // Relación Asignatura - Alumnos que la cursan
 
   @ManyToMany(() => Teacher, (teacher) => teacher.subjects)
-  teachers: Teacher[];
+  teachers: Teacher[]; // Relación Asignatura - Profesor/es
 }
