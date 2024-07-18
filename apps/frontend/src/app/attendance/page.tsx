@@ -2,7 +2,7 @@
 import { AsideMenu } from '@/components/AsideMenu';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import Header from '@/components/Header';
-import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   AlertDialog, AlertDialogAction, AlertDialogCancel,
   AlertDialogContent, AlertDialogDescription, AlertDialogFooter,
@@ -18,6 +18,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useState } from 'react';
 import GeneralSelect from '@/components/GeneralSelect';
+import ButtonGroup from '@/components/IconButtonGroup';
+import { Book, LibraryBig, SquareUserRound } from 'lucide-react';
 
 interface AttendanceProps {
     type: string;
@@ -96,10 +98,35 @@ export function AttendanceComponent({ type }: AttendanceProps) {
                   </Tooltip>
                 </TooltipProvider>
               </CardTitle>
-              <div className="block">
-                {"Funcionando"}
-              </div>
             </CardHeader>
+            <CardContent>
+              <TooltipProvider>
+                <div className="flex gap-2 items-center">
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <LibraryBig className="h-5 w-5" />
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Asignatura</p>
+                    </TooltipContent>
+                  </Tooltip>
+                  <p>{<Link className="underline underline-offset-2" href={'/subjects/bases_de_datos'}>Bases de
+                    Datos</Link>}</p>
+                </div>
+                <div className="flex gap-2 items-center">
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <SquareUserRound className="h-5 w-5" />
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Profesor/a</p>
+                    </TooltipContent>
+                  </Tooltip>
+                  <p>{<Link className="underline underline-offset-2" href={'/teachers/Antonio_Otero'}>Antonio
+                    Otero</Link>}</p>
+                </div>
+              </TooltipProvider>
+            </CardContent>
             <CardFooter>
               <AlertDialog>
                 <AlertDialogTrigger asChild>
@@ -135,6 +162,7 @@ export function AttendanceComponent({ type }: AttendanceProps) {
           </Card>
         ))}
       </div>
+      <ButtonGroup/>
     </div>
   );
 }

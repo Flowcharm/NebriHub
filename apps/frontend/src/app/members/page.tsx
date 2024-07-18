@@ -19,7 +19,7 @@ const fetchUsers = async () => {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
-            withCredentials: true, // Asegúrate de que las cookies se envían con la solicitud
+            withCredentials: true,
         });
         return response.data;
     } catch (error) {

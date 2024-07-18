@@ -20,8 +20,7 @@ export class Attendance {
   @Column()
   day: Date;
 
-  // Falta idear cómo organizar la primera y segunda clase de 3 horas cada una y
-  // ver cómo contabilizar las faltas (1 por hora o 1 por clase perdida)
+  // Falta idear cómo organizar la primera y segunda clase de 3 horas cada una
 
   @Column()
   status: string; // Presente, Ausente, Tarde, etc...

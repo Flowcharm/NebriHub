@@ -5,6 +5,7 @@ import {
   ManyToOne,
   ManyToMany,
   JoinTable,
+  OneToMany,
 } from 'typeorm';
 import { Teacher } from './teacher.entity';
 import { Subject } from './subject.entity';
@@ -26,6 +27,9 @@ export class InstitutionClass {
   @ManyToMany(() => Subject, (subject) => subject.classes)
   @JoinTable()
   subjects: Subject[]; // Relación Clase - Asignaturas
+
+  @OneToMany(() => Subject, (subject) => subject.currentClasses)
+  currentSubject: Subject;
 
   @Column()
   acronym: string;

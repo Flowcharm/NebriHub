@@ -15,6 +15,8 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
+import { Label } from '@/components/ui/label';
+import Link from 'next/link';
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -69,7 +71,11 @@ export function DataTable<TData, TValue>({
                     ) : (
                         <TableRow>
                             <TableCell colSpan={columns.length} className="h-24 text-center">
-                                No results.
+                                No hay resultados.
+                                <p className="text-muted-foreground">
+                                    Si crees que hay un error:
+                                    <Link className="underline" href="mailto:info@nebrihub.es?subject=Falta de Resultados&body=Nombre:</br>">Comunícalo</Link>
+                                </p>
                             </TableCell>
                         </TableRow>
                     )}
