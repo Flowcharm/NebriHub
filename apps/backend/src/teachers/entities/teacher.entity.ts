@@ -1,3 +1,5 @@
+import { InstitutionClass } from 'src/classes/entities/class.entity';
+import { Subject } from 'src/subjects/entities/subject.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -6,8 +8,6 @@ import {
   JoinTable,
   OneToMany,
 } from 'typeorm';
-import { Subject } from './subject.entity';
-import { InstitutionClass } from './class.entity';
 
 @Entity()
 export class Teacher {

@@ -18,11 +18,17 @@ export class User {
   lastName: string;
 
   @Column({ nullable: true })
-  class: string;
+  class?: string;
 
   @Column({ nullable: true })
-  resetToken: string;
+  resetToken?: string;
 
   @Column({ type: 'timestamp', nullable: true })
-  resetTokenExpiry: Date;
+  resetTokenExpiry?: Date;
+
+  @Column({ nullable: true })
+  googleId?: string;
+
+  @Column({ nullable: true })
+  microsoftId?: string;
 }

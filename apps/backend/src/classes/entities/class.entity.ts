@@ -7,8 +7,8 @@ import {
   JoinTable,
   OneToMany,
 } from 'typeorm';
-import { Teacher } from './teacher.entity';
-import { Subject } from './subject.entity';
+import { Subject } from '../../subjects/entities/subject.entity';
+import { Teacher } from 'src/teachers/entities/teacher.entity';
 
 @Entity()
 export class InstitutionClass {
