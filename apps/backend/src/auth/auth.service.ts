@@ -4,9 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
 import * as bcrypt from 'bcrypt';
-import * as nodemailer from 'nodemailer';
 import { UsersService } from '../users/users.service';
-import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class AuthService {
@@ -45,39 +43,6 @@ export class AuthService {
     const payload = { email: user.email, sub: user.id };
     return this.jwtService.sign(payload, {
       secret: this.configService.get<string>('JWT_SECRET'),
-    });
-  }
-
-  async sendPasswordResetEmail(email: string) {
-    const user = await this.userService.findByEmail(email);
-    if (!user) {
-      throw new Error('User not found');
-    }
-
-    const resetToken = uuidv4();
-    const resetLink = `http://localhost:3000/reset-password?token=${resetToken}`;
-
-    await this.userService.savePasswordResetToken(user.id, resetToken);
-
-    const transporter = nodemailer.createTransport({
-      host: 'smtp.protonmail.com',
-      port: 1025,
-      secure: false,
-      auth: {
-        user: 'nebricalendar@protonmail.com',
-        pass: 'contraseñanebricalendar2024',
-      },
-      tls: {
-        rejectUnauthorized: false,
-      },
-    });
-
-    await transporter.sendMail({
-      from: '"NebriCalendar Support Team" <nebricalendar@protonmail.com>',
-      to: `${email}`,
-      subject: 'Password Reset Email',
-      text: `We saw you requested a password reset email, so here is your link: ${resetLink}`,
-      html: '<b>Hello world?</b>',
     });
   }
 

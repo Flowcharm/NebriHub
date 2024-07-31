@@ -1,6 +1,6 @@
 import { Controller, Delete, Get, Param } from '@nestjs/common';
 import { SubjectService } from './subject.service';
-import { Subject } from '../entities/subject.entity';
+import { Subject } from './entities/subject.entity';
 
 @Controller('subjects')
 export class SubjectController {

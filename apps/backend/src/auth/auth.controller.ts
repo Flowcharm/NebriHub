@@ -5,15 +5,22 @@ import {
   Res,
   HttpCode,
   HttpStatus,
+  Get,
+  UseGuards,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
 import { Response } from 'express';
+import { AuthGuard } from '@nestjs/passport';
+import { EmailService } from 'src/email/email.service';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly emailService: EmailService,
+  ) {}
 
   @Post('login')
   async login(@Body() loginDto: LoginDto, @Res() res: Response) {
@@ -40,7 +47,7 @@ export class AuthController {
   @Post('forgot-password')
   @HttpCode(HttpStatus.OK)
   async forgotPassword(@Body('email') email: string) {
-    await this.authService.sendPasswordResetEmail(email);
+    await this.emailService.sendPasswordResetEmail(email);
     return { message: 'Password reset email sent' };
   }
 
@@ -52,5 +59,17 @@ export class AuthController {
   ) {
     await this.authService.resetPassword(token, newPassword);
     return { message: 'Password reset successful' };
+  }
+
+  @Get('google')
+  @UseGuards(AuthGuard('google'))
+  async googleAuth() {
+    // ...
+  }
+
+  @Get('google/cb')
+  @UseGuards(AuthGuard('google'))
+  async googleAuthCb() {
+    // ...
   }
 }

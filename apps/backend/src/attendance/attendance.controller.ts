@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Attendance } from '../entities/attendance.entity';
+import { Attendance } from './entities/attendance.entity';
 
 @Injectable()
 export class AttendanceController {
@@ -11,7 +11,6 @@ export class AttendanceController {
   ) {}
 
   async findAll(): Promise<Attendance[]> {
-    console.log('findAll Service: Inizio'); // Debug log
     return await this.attendanceRepository.find();
   }
 
