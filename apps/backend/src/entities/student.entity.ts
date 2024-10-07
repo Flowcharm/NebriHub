@@ -4,8 +4,10 @@ import {
   Column,
   ManyToMany,
   JoinTable,
+  ManyToOne,
 } from 'typeorm';
 import { Subject } from './subject.entity';
+import { InstitutionClass } from './class.entity';
 
 @Entity()
 export class Student {
@@ -18,7 +20,13 @@ export class Student {
   @Column()
   surname: string;
 
+  @ManyToOne(
+    () => InstitutionClass,
+    (institutionClass) => institutionClass.students,
+  )
+  currentClass: InstitutionClass; // Relación Estudiante - Clase actual
+
   @ManyToMany(() => Subject)
   @JoinTable()
-  subjects: Subject[];
+  subjects: Subject[]; // Relación Estudiante - Asignaturas
 }

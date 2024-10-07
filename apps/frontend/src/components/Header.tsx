@@ -17,33 +17,62 @@ import {
   UserPlus,
   TicketPlus,
   CircleFadingPlus,
-} from 'lucide-react';
+  Cog,
+  CircleHelp,
+  LogOut,
+} from "lucide-react";
 import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbSeparator,
-} from '@/components/ui/breadcrumb';
+} from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Label } from '@/components/ui/label';
-import { usePathname } from 'next/navigation';
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { usePathname } from "next/navigation";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import NotificationCard from "@/components/NotificationCard";
 
 const pathNameMap: { [key: string]: string } = {
-  '/dashboard': 'Panel de control',
-  '/calendar': 'Calendario',
-  '/projects': 'Proyectos',
-  '/members': 'Miembros',
-  '/attendance': 'Asistencia',
-  '/statistics': 'Estadísticas',
-  '/settings': 'Configuración',
+  "/dashboard": "Panel de control",
+  "/calendar": "Calendario",
+  "/projects": "Proyectos",
+  "/members": "Miembros",
+  "/attendance": "Asistencia",
+  "/statistics": "Estadísticas",
+  "/settings": "Configuración",
 };
 
 function getPathNameInSpanish(pathname: string): string {
-  return pathNameMap[pathname] || pathname.slice(1).charAt(0).toUpperCase() + pathname.slice(2);
+  return (
+    pathNameMap[pathname] ||
+    pathname.slice(1).charAt(0).toUpperCase() + pathname.slice(2)
+  );
 }
 
 export default function Header() {
@@ -51,8 +80,7 @@ export default function Header() {
   const spanishPathName = getPathNameInSpanish(pathname);
 
   return (
-    <header
-      className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
+    <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
       <Sheet>
         <SheetTrigger asChild>
           <Button size="icon" variant="outline" className="sm:hidden">
@@ -118,7 +146,9 @@ export default function Header() {
         <BreadcrumbList>
           <BreadcrumbItem>
             <BreadcrumbLink asChild>
-              <Link href="/dashboard">Instituto Nebrija de Formación Profesional</Link>
+              <Link href="/dashboard">
+                Instituto Nebrija de Formación Profesional
+              </Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
@@ -137,27 +167,19 @@ export default function Header() {
           className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[320px]"
         />
       </div>
-      <DropdownMenu>
-        <DropdownMenuTrigger>
-          <BellRing className="h-5 w-5 text-muted-foreground"/>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent>
-          <DropdownMenuLabel className="text-center">Notificaciones</DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem className="m-2">
-            <UserPlus className="h-4 w-4 m-1"/>
-            <Label>Solicitudes</Label>
-          </DropdownMenuItem>
-          <DropdownMenuItem className="m-2">
-            <TicketPlus className="h-4 w-4 m-1"/>
-            <Label>Incidencias</Label>
-          </DropdownMenuItem>
-          <DropdownMenuItem className="m-2">
-            <CircleFadingPlus className="h-4 w-4 m-1"/>
-            <Label>Tareas</Label>
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+      <Sheet>
+        <SheetTrigger>
+          <BellRing className="h-5 w-5 text-muted-foreground" />
+        </SheetTrigger>
+        <SheetContent>
+          <SheetHeader>
+            <SheetTitle>Notifications Center</SheetTitle>
+            <SheetDescription>
+              <ScrollArea className="h-[100%] w-[100%] rounded-md p-4"></ScrollArea>
+            </SheetDescription>
+          </SheetHeader>
+        </SheetContent>
+      </Sheet>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
@@ -175,12 +197,21 @@ export default function Header() {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuLabel>{/*UserName*/}</DropdownMenuLabel>
+          <DropdownMenuLabel>{"Pedro García Sánchez"}</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>Configuración</DropdownMenuItem>
-          <DropdownMenuItem>Ayuda</DropdownMenuItem>
+          <DropdownMenuItem>
+            <Cog className="h-5 w-5 m-1 mr-2" />
+            <p>Configuración</p>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <CircleHelp className="h-5 w-5 m-1 mr-2" />
+            <p>Ayuda</p>
+          </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>Cerrar sesión</DropdownMenuItem>
+          <DropdownMenuItem>
+            <LogOut className="h-5 w-5 m-1 mr-2" />
+            <p>Cerrar sesión</p>
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </header>

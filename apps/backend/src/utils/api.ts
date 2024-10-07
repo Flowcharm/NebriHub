@@ -1,10 +1,12 @@
 import axios from 'axios';
 
+const email_placeholder = 'pedrosanchez@tuinstitucion.com';
+
 // Function to get the JWT token
 const getJwtToken = async () => {
   try {
     const response = await axios.post('http://localhost:3005/auth/login', {
-      email: 'your-email@example.com',
+      email: email_placeholder,
       password: 'your-password',
     });
     return response.data.token; // Ensure token is returned in response body

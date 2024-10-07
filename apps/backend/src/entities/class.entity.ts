@@ -9,6 +9,7 @@ import {
 } from 'typeorm';
 import { Teacher } from './teacher.entity';
 import { Subject } from './subject.entity';
+import { Student } from './student.entity';
 
 @Entity()
 export class InstitutionClass {
@@ -28,12 +29,15 @@ export class InstitutionClass {
   @JoinTable()
   subjects: Subject[]; // Relación Clase - Asignaturas
 
-  @OneToMany(() => Subject, (subject) => subject.currentClasses)
-  currentSubject: Subject;
+  @ManyToOne(() => Subject, (subject) => subject.currentClasses)
+  currentSubject: Subject; // Relación Asignatura en curso - Clase
+
+  @OneToMany(() => Student, (student) => student.currentClass)
+  students: Student[]; // Relación Clase - Estudiantes
 
   @Column()
   acronym: string;
 
   @Column()
-  current_year: boolean;
+  archived: boolean;
 }

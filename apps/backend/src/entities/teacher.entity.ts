@@ -24,7 +24,7 @@ export class Teacher {
     () => InstitutionClass,
     (institutionClass) => institutionClass.tutor,
   )
-  classes: InstitutionClass[]; // Relación Profesor (Tutor) - Clase/s
+  classes: InstitutionClass[]; // Relación Profesor (Master o Tutor) - Clase/s
 
   @ManyToMany(() => Subject)
   @JoinTable()

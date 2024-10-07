@@ -3,7 +3,8 @@ import {
   PrimaryGeneratedColumn,
   Column,
   ManyToMany,
-  JoinTable, ManyToOne,
+  JoinTable,
+  ManyToOne,
 } from 'typeorm';
 import { Student } from './student.entity';
 import { Teacher } from './teacher.entity';
@@ -24,9 +25,11 @@ export class Subject {
   classes: InstitutionClass[]; // Relación Asignatura - Clase
 
   @ManyToMany(() => Student, (student) => student.subjects)
+  @JoinTable()
   students: Student[]; // Relación Asignatura - Alumnos que la cursan
 
   @ManyToMany(() => Teacher, (teacher) => teacher.subjects)
+  @JoinTable()
   teachers: Teacher[]; // Relación Asignatura - Profesor/es
 
   @ManyToOne(

@@ -7,8 +7,10 @@ import { InstitutionModule } from './institutions/institution.module';
 import { JwtMiddleware } from './auth/middleware/jwt.middleware';
 import { TeacherModule } from './teachers/teacher.module';
 import { SubjectModule } from './subjects/subject.module';
+import { FileModule } from './files/file.module';
 import { StudentModule } from './students/student.module';
 import { ClassModule } from './classes/class.module';
+import { AssignmentModule } from './assignments/assignment.module';
 
 @Module({
   imports: [
@@ -25,6 +27,7 @@ import { ClassModule } from './classes/class.module';
       autoLoadEntities: true,
       synchronize: true,
     }),
+    AssignmentModule,
     AuthModule,
     UsersModule,
     InstitutionModule,
@@ -32,6 +35,7 @@ import { ClassModule } from './classes/class.module';
     StudentModule,
     SubjectModule,
     ClassModule,
+    FileModule,
   ],
   controllers: [],
   providers: [],
