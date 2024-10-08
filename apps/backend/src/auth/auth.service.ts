@@ -5,14 +5,14 @@ import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
 import * as bcrypt from 'bcrypt';
 import * as nodemailer from 'nodemailer';
-import { UsersService } from '../users/users.service';
+import { UserService } from '../users/user.service';
 import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly jwtService: JwtService,
-    private readonly userService: UsersService,
+    private readonly userService: UserService,
     private readonly configService: ConfigService,
   ) {}
 

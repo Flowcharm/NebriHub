@@ -1,10 +1,10 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
-import { Assignment } from './assignment.entity';
+import { Assignment } from '../assignments/assignment.entity';
 
 @Entity()
 export class FileEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column()
   name: string; // Nombre original del archivo

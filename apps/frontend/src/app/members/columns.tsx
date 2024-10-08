@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import { ColumnDef } from "@tanstack/react-table"
-import { Button } from "@/components/ui/button"
+import { ColumnDef } from "@tanstack/react-table";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,55 +9,54 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 
-import { MoreHorizontal } from "lucide-react"
-
+import { MoreHorizontal } from "lucide-react";
 
 export type User = {
-  id: string
-  firstName: string
-  lastName: string
-  email: string
-  subject: string[]
-  class: string
-}
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  subject: string[];
+  class: string;
+};
 
 export const columns: ColumnDef<User>[] = [
   {
     accessorKey: "first_name",
     header: () => <div className="text-left p-2">Nombre</div>,
     cell: ({ row }) => {
-      const firstName: string = (row.getValue("first_name"))
+      const firstName: string = row.getValue("first_name");
 
-      return <div className="text-left font-medium p-2">{firstName}</div>
+      return <div className="text-left font-medium p-2">{firstName}</div>;
     },
   },
   {
     accessorKey: "last_name",
     header: () => <div className="text-left p-2">Apellidos</div>,
     cell: ({ row }) => {
-      const lastName: string = (row.getValue("last_name"))
+      const lastName: string = row.getValue("last_name");
 
-      return <div className="text-left font-medium p-2">{lastName}</div>
+      return <div className="text-left font-medium p-2">{lastName}</div>;
     },
   },
   {
     accessorKey: "class",
     header: () => <div className="text-left p-2">Clase</div>,
     cell: ({ row }) => {
-      const course: string = (row.getValue("class"))
+      const course: string = row.getValue("class");
 
-      return <div className="text-left font-medium p-2">{course}</div>
+      return <div className="text-left font-medium p-2">{course}</div>;
     },
   },
   {
     id: "actions",
     cell: ({ row }) => {
-      const user = row.original
+      const user = row.original;
 
       return (
-          <div className={"text-right"}>
+        <div className={"text-right"}>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="h-8 w-8 p-0">
@@ -68,7 +67,7 @@ export const columns: ColumnDef<User>[] = [
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
               <DropdownMenuItem
-                  onClick={() => navigator.clipboard.writeText(user.id)}
+                onClick={() => navigator.clipboard.writeText(user.id)}
               >
                 Copy payment ID
               </DropdownMenuItem>
@@ -77,9 +76,8 @@ export const columns: ColumnDef<User>[] = [
               <DropdownMenuItem>View payment details</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          </div>
-      )
+        </div>
+      );
     },
   },
-]
-
+];

@@ -1,6 +1,7 @@
+// teachers/teacher.controller.ts
 import { Controller, Delete, Get, Param } from '@nestjs/common';
 import { TeacherService } from './teacher.service';
-import { Teacher } from '../entities/teacher.entity';
+import { Teacher } from './teacher.entity';
 
 @Controller('teachers')
 export class TeacherController {

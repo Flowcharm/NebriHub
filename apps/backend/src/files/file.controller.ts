@@ -1,6 +1,6 @@
 import { Controller, Delete, Get, Param } from '@nestjs/common';
 import { FileService } from './file.service';
-import { FileEntity } from '../entities/file.entity';
+import { FileEntity } from './file.entity';
 
 @Controller('files')
 export class FileController {

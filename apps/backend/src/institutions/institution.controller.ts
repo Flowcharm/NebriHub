@@ -1,6 +1,6 @@
-import { Controller, Delete, Get, Param } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { InstitutionService } from './institution.service';
-import { Institution } from '../entities/institution.entity';
+import { Institution } from './institution.entity';
 
 @Controller('institutions')
 export class InstitutionController {
@@ -15,6 +15,11 @@ export class InstitutionController {
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<Institution> {
     return this.institutionService.findOne(id);
+  }
+
+  @Post('create')
+  async create(@Body() institution: Institution): Promise<Institution> {
+    return this.institutionService.create(institution);
   }
 
   @Delete(':id')

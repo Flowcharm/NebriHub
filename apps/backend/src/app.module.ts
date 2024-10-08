@@ -2,7 +2,7 @@ import { Module, MiddlewareConsumer, NestModule } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
-import { UsersModule } from './users/users.module';
+import { UserModule } from './users/user.module';
 import { InstitutionModule } from './institutions/institution.module';
 import { JwtMiddleware } from './auth/middleware/jwt.middleware';
 import { TeacherModule } from './teachers/teacher.module';
@@ -11,6 +11,7 @@ import { FileModule } from './files/file.module';
 import { StudentModule } from './students/student.module';
 import { ClassModule } from './classes/class.module';
 import { AssignmentModule } from './assignments/assignment.module';
+import { RoleModule } from './roles/role.module';
 
 @Module({
   imports: [
@@ -29,13 +30,14 @@ import { AssignmentModule } from './assignments/assignment.module';
     }),
     AssignmentModule,
     AuthModule,
-    UsersModule,
+    UserModule,
     InstitutionModule,
     TeacherModule,
     StudentModule,
     SubjectModule,
     ClassModule,
     FileModule,
+    RoleModule,
   ],
   controllers: [],
   providers: [],

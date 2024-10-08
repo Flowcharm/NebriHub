@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Subject } from '../entities/subject.entity';
+import { Subject } from './subject.entity';
 
 @Injectable()
 export class SubjectService {
@@ -17,7 +17,7 @@ export class SubjectService {
 
   async findOne(id: string): Promise<Subject> {
     return this.subjectRepository.findOne({
-      where: { id: parseInt(id, 10) },
+      where: { id: id },
     });
   }
 

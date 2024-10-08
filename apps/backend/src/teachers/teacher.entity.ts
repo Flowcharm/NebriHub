@@ -6,13 +6,13 @@ import {
   JoinTable,
   OneToMany,
 } from 'typeorm';
-import { Subject } from './subject.entity';
-import { InstitutionClass } from './class.entity';
+import { Subject } from '../subjects/subject.entity';
+import { InstitutionClass } from '../classes/class.entity';
 
 @Entity()
 export class Teacher {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column()
   name: string;

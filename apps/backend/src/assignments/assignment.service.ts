@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { InstitutionClass } from '../entities/class.entity';
-import { Assignment } from '../entities/assignment.entity';
+import { InstitutionClass } from '../classes/class.entity';
+import { Assignment } from './assignment.entity';
 
 @Injectable()
 export class AssignmentService {
@@ -18,7 +18,7 @@ export class AssignmentService {
 
   async findOne(id: string): Promise<Assignment> {
     return this.assignmentRepository.findOne({
-      where: { id: parseInt(id, 10) },
+      where: { id: id },
     });
   }
 

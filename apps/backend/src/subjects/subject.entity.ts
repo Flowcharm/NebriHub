@@ -6,14 +6,14 @@ import {
   JoinTable,
   ManyToOne,
 } from 'typeorm';
-import { Student } from './student.entity';
-import { Teacher } from './teacher.entity';
-import { InstitutionClass } from './class.entity';
+import { Student } from '../students/student.entity';
+import { Teacher } from '../teachers/teacher.entity';
+import { InstitutionClass } from '../classes/class.entity';
 
 @Entity()
 export class Subject {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column()
   subject_name: string;

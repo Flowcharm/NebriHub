@@ -1,8 +1,15 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToMany,
+  JoinTable,
+} from 'typeorm';
+import { Role } from '../roles/role.entity';
 
 @Entity()
 export class User {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
@@ -25,4 +32,8 @@ export class User {
 
   @Column({ type: 'timestamp', nullable: true })
   resetTokenExpiry: Date;
+
+  @ManyToMany(() => Role)
+  @JoinTable()
+  roles: Role[]; // Un usuario puede tener múltiples roles (estudiante, profesor, admin)
 }

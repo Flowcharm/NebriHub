@@ -1,12 +1,12 @@
 import { Entity, PrimaryGeneratedColumn, ManyToOne, Column } from 'typeorm';
-import { Student } from './student.entity';
-import { Subject } from './subject.entity';
-import { InstitutionClass } from './class.entity';
+import { Student } from '../students/student.entity';
+import { Subject } from '../subjects/subject.entity';
+import { InstitutionClass } from '../classes/class.entity';
 
 @Entity()
 export class Attendance {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @ManyToOne(() => Student, (student) => student.id)
   student: Student;
@@ -19,8 +19,6 @@ export class Attendance {
 
   @Column()
   day: Date;
-
-  // Falta idear cómo organizar la primera y segunda clase de 3 horas cada una
 
   @Column()
   status: string; // Presente, Ausente, Tarde, etc...

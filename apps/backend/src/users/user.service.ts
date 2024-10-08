@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MoreThan, Repository } from 'typeorm';
-import { User } from '../entities/user.entity';
+import { User } from './user.entity';
 
 @Injectable()
-export class UsersService {
+export class UserService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
@@ -34,7 +34,7 @@ export class UsersService {
   async savePasswordResetToken(userId: string, token: string): Promise<void> {
     await this.userRepository.update(userId, {
       resetToken: token,
-      resetTokenExpiry: new Date(Date.now() + 3600000), // 1 hour from now
+      resetTokenExpiry: new Date(Date.now() + 36000), // 1 hour from now
     });
   }
 

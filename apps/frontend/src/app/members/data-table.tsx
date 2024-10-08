@@ -76,7 +76,7 @@ export function DataTable<TData, TValue>({
                   Si crees que hay un error:<span> </span>
                   <Link
                     className="underline"
-                    href="mailto:info@nebrihub.es?subject=Falta de Resultados&body=Nombre:<br>Página: DataTable<br>Motivo:"
+                    href="mailto:info@nebrihub.es?subject=Falta de Resultados&body=Nombre:"
                   >
                     Comunícalo
                   </Link>

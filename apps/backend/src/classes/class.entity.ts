@@ -7,14 +7,14 @@ import {
   JoinTable,
   OneToMany,
 } from 'typeorm';
-import { Teacher } from './teacher.entity';
-import { Subject } from './subject.entity';
-import { Student } from './student.entity';
+import { Teacher } from '../teachers/teacher.entity';
+import { Subject } from '../subjects/subject.entity';
+import { Student } from '../students/student.entity';
 
 @Entity()
 export class InstitutionClass {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column()
   name: string;
