@@ -239,11 +239,9 @@ export function DashboardComponent() {
                               Francisco Albiar
                             </SelectItem>
                             <SelectItem value={" "}>
-                              Antonio Cardador
+                              Jose Carlos Ramirez
                             </SelectItem>
-                            <SelectItem value={" "}>
-                              Elvira Hernández
-                            </SelectItem>
+                            <SelectItem value={" "}>Elvira Pérez</SelectItem>
                           </SelectContent>
                         </Select>
                       </AlertDialogDescription>

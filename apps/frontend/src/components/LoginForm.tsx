@@ -35,7 +35,14 @@ export default function LoginForm() {
       setIconColor("currentColor"); // Restablecer el color al normal tras un login exitoso
 
       const { token } = response.data;
-      document.cookie = `token=${token}; path=/; secure; sameSite=strict;`;
+
+      // Configurar la cookie con un tiempo de expiración de 14 días
+      const expirationDays = 14;
+      const expirationDate = new Date();
+      expirationDate.setDate(expirationDate.getDate() + expirationDays); // Suma 14 días a la fecha actual
+
+      document.cookie = `token=${token}; path=/; expires=${expirationDate.toUTCString()}; secure; sameSite=strict;`;
+
       router.push("/dashboard");
     } catch (error: any) {
       setIconColor("#ff2600"); // Cambiar los iconos a rojo tras un error de login

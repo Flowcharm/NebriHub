@@ -82,7 +82,7 @@ export class UserService {
   async savePasswordResetToken(userId: string, token: string): Promise<void> {
     await this.userRepository.update(userId, {
       resetToken: token,
-      resetTokenExpiry: new Date(Date.now() + 36000), // 1 hour from now
+      resetTokenExpiry: new Date(Date.now() + 3600000), // 1 hour from now
     });
   }
 
