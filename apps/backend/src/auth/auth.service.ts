@@ -73,7 +73,7 @@ export class AuthService {
     });
 
     await transporter.sendMail({
-      from: '"NebriCalendar Support Team" <nebricalendar@protonmail.com>',
+      from: '"NebriHub Support Team" <nebricalendar@protonmail.com>',
       to: `${email}`,
       subject: 'Password Reset Email',
       text: `We saw you requested a password reset email, so here is your link: ${resetLink}`,

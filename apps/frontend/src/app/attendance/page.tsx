@@ -43,6 +43,7 @@ import GeneralSelect from "@/components/GeneralSelect";
 import ButtonGroup from "@/components/IconButtonGroup";
 import { Book, LibraryBig, SquareUserRound } from "lucide-react";
 import Image from "next/image";
+import { UserProvider } from "@/context/UserContext";
 
 interface AttendanceProps {
   type: string;
@@ -52,15 +53,17 @@ const userType: string = "";
 
 export default function Attendance() {
   return (
-    <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14 bg-muted/40">
-      <TooltipProvider>
-        <Header />
-        <AsideMenu />
-      </TooltipProvider>
-      <div className="flex mr-9">
-        <AttendanceComponent type={userType} />
+    <UserProvider>
+      <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14 bg-muted/40">
+        <TooltipProvider>
+          <Header />
+          <AsideMenu />
+        </TooltipProvider>
+        <div className="flex mr-9">
+          <AttendanceComponent type={userType} />
+        </div>
       </div>
-    </div>
+    </UserProvider>
   );
 }
 

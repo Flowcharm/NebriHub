@@ -1,32 +1,33 @@
-// auth/jwt-auth.guard.ts
 import {
+  Injectable,
   CanActivate,
   ExecutionContext,
-  Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class JwtAuthGuard implements CanActivate {
-  constructor(private readonly jwtService: JwtService) {}
+  constructor(
+    private readonly jwtService: JwtService,
+    private readonly configService: ConfigService,
+  ) {}
 
-  canActivate(context: ExecutionContext): boolean | Promise<boolean> {
+  canActivate(context: ExecutionContext): boolean {
     const request = context.switchToHttp().getRequest<Request>();
-
-    // Retrieve the token from the correct cookie name
-    const token = request.cookies['token'];
+    const token = request.cookies['token']; // Asegúrate de que el token está en las cookies
 
     if (!token) {
-      throw new UnauthorizedException('Authentication token is missing');
+      throw new UnauthorizedException('No authentication token provided');
     }
 
     try {
-      // Verify the token using the JWT service
-      request['user'] = this.jwtService.verify(token, {
-        secret: process.env.JWT_SECRET, // Make sure JWT_SECRET is set in your environment variables
+      const decoded = this.jwtService.verify(token, {
+        secret: this.configService.get('JWT_SECRET'),
       });
+      request.user = { userId: decoded.sub }; // Asegúrate de que 'sub' es el userId correcto
       return true;
     } catch (err) {
       throw new UnauthorizedException('Invalid token');

@@ -14,9 +14,6 @@ import {
   LineChart,
   Settings,
   BellRing,
-  UserPlus,
-  TicketPlus,
-  CircleFadingPlus,
   Cog,
   CircleHelp,
   LogOut,
@@ -48,15 +45,7 @@ import {
 } from "@/components/ui/sheet";
 import { usePathname } from "next/navigation";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import NotificationCard from "@/components/NotificationCard";
+import { useUser } from "@/context/UserContext"; // Importa el UserContext para acceder a los datos del usuario
 
 const pathNameMap: { [key: string]: string } = {
   "/dashboard": "Panel de control",
@@ -79,6 +68,9 @@ export default function Header() {
   const pathname = usePathname();
   const spanishPathName = getPathNameInSpanish(pathname);
 
+  // Acceder al usuario desde el contexto
+  const { user } = useUser();
+
   return (
     <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
       <Sheet>
@@ -95,7 +87,7 @@ export default function Header() {
               className="group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:text-base"
             >
               <Home className="h-5 w-5 transition-all group-hover:scale-110" />
-              <span className="sr-only">NebriCalendar</span>
+              <span className="sr-only">NebriHub</span>
             </Link>
             <Link
               href="/calendar"
@@ -197,7 +189,9 @@ export default function Header() {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuLabel>{"Pedro García Sánchez"}</DropdownMenuLabel>
+          <DropdownMenuLabel>
+            {user ? `${user.firstName} ${user.lastName}` : "Cargando..."}
+          </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem>
             <Cog className="h-5 w-5 m-1 mr-2" />

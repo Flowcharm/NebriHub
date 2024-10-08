@@ -12,6 +12,7 @@ import { StudentModule } from './students/student.module';
 import { ClassModule } from './classes/class.module';
 import { AssignmentModule } from './assignments/assignment.module';
 import { RoleModule } from './roles/role.module';
+import { ProfileModule } from './profile/profile.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { RoleModule } from './roles/role.module';
       autoLoadEntities: true,
       synchronize: true,
     }),
+    ProfileModule,
     AssignmentModule,
     AuthModule,
     UserModule,

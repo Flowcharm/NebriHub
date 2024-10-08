@@ -4,5 +4,5 @@ export class RegisterDto {
   firstName: string;
   lastName: string;
   institution: string;
-  userType: string;
+  role: string;
 }

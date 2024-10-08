@@ -6,23 +6,29 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @Controller('users')
 export class UserController {
-  constructor(private readonly usersService: UserService) {}
+  constructor(private readonly userService: UserService) {}
 
   @UseGuards(JwtAuthGuard)
   @Get()
   findAll(): Promise<User[]> {
-    return this.usersService.findAll();
+    return this.userService.findAll();
   }
 
   @UseGuards(JwtAuthGuard)
   @Get(':id')
   findOne(@Param('id') id: string): Promise<User> {
-    return this.usersService.findById(id);
+    return this.userService.findById(id);
   }
 
   @UseGuards(JwtAuthGuard)
   @Delete(':id')
   remove(@Param('id') id: string): Promise<void> {
-    return this.usersService.remove(id);
+    return this.userService.remove(id);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get(':id/details')
+  async getUserDetails(@Param('id') id: string) {
+    return this.userService.getUserDetails(id);
   }
 }

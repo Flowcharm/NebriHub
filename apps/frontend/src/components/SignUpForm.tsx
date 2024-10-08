@@ -1,51 +1,61 @@
 "use client";
 
-import React, { useState, FormEvent } from 'react';
-import axios from 'axios';
-import { useRouter } from 'next/navigation';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import Link from 'next/link';
-import Image from 'next/image';
-import { Separator } from '@/components/ui/separator';
+import React, { useState, FormEvent } from "react";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import Link from "next/link";
+import Image from "next/image";
+import { Separator } from "@/components/ui/separator";
 import GeneralSelect from "./GeneralSelect";
+import { Mail, RectangleEllipsis } from "lucide-react";
 
 export default function SignUpForm({ userType }: { userType: string }) {
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [firstName, setFirstName] = useState<string>('');
-  const [lastName, setLastName] = useState<string>('');
-  const [institution, setInstitution] = useState<string>('');
-  const [message, setMessage] = useState<string>('');
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [firstName, setFirstName] = useState<string>("");
+  const [lastName, setLastName] = useState<string>("");
+  const [institution, setInstitution] = useState<string>("");
+  const [message, setMessage] = useState<string>("");
   const router = useRouter();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     try {
-      await axios.post('http://localhost:3005/auth/register', {
-        email,
-        password,
-        firstName,
-        lastName,
-        institution,
-      }, { withCredentials: true });
-      router.push('/verify-institution');
+      await axios.post(
+        "http://localhost:3005/auth/register",
+        {
+          email,
+          password,
+          firstName,
+          lastName,
+          institution,
+        },
+        { withCredentials: true }
+      );
+      router.push("/verify-institution");
     } catch (error: any) {
-      setMessage(`Registration failed: ${error.response?.data?.message || 'An error occurred'}`);
+      setMessage(
+        `Registration failed: ${
+          error.response?.data?.message || "An error occurred"
+        }`
+      );
     }
   };
 
-  const oppositeUserType = userType === 'profesor' ? 'estudiante' : 'profesor';
-  const oppositeUserTypeUrl = userType === 'profesor' ? '/register-student' : '/register-teacher';
+  const oppositeUserType = userType === "profesor" ? "estudiante" : "profesor";
+  const oppositeUserTypeUrl =
+    userType === "profesor" ? "/register-student" : "/register-teacher";
 
   return (
     <>
       <div className="grid gap-2 text-center">
         <h1 className="text-3xl font-bold">Registro de {userType}</h1>
         <p className="text-balance text-muted-foreground">
-          Introduce tus datos más abajo para crear una cuenta NebriCalendar.
+          Introduce tus datos más abajo para crear una cuenta NebriHub.
         </p>
       </div>
       <form onSubmit={handleSubmit} className="grid gap-4">
@@ -72,7 +82,10 @@ export default function SignUpForm({ userType }: { userType: string }) {
           </div>
         </div>
         <div className="grid gap-2">
-          <Label htmlFor="email">Correo electrónico</Label>
+          <div className="flex items-center">
+            <Label htmlFor="email">Correo electrónico</Label>
+            <Mail className={`ml-2 h-3.5 w-3.5`} />
+          </div>
           <Input
             id="email"
             type="email"
@@ -83,7 +96,10 @@ export default function SignUpForm({ userType }: { userType: string }) {
           />
         </div>
         <div className="grid gap-2">
-          <Label htmlFor="password">Contraseña</Label>
+          <div className="flex items-center">
+            <Label htmlFor="password">Contraseña</Label>
+            <RectangleEllipsis className={`ml-2 h-4 w-4.5`} />
+          </div>
           <Input
             id="password"
             type="password"
@@ -92,7 +108,12 @@ export default function SignUpForm({ userType }: { userType: string }) {
             required
           />
         </div>
-        <GeneralSelect type={"institutions"} onSelect={setInstitution} size={"large"} usingLabel={true}/>
+        <GeneralSelect
+          type={"institutions"}
+          onSelect={setInstitution}
+          size={"large"}
+          usingLabel={true}
+        />
         <Button type="submit" className="w-full">
           Crear cuenta
         </Button>

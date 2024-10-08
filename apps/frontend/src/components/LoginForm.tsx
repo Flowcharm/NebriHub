@@ -10,11 +10,14 @@ import { Mail, RectangleEllipsis } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Separator } from "@/components/ui/separator";
+import { LoginAlert } from "@/components/LoginError";
 
 export default function LoginForm() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [message, setMessage] = useState<string>("");
+  const [resultTitle, setTitle] = useState<string>("");
+  const [iconColor, setIconColor] = useState<string>("currentColor");
   const router = useRouter();
 
   const handleSubmit = async (e: FormEvent) => {
@@ -26,14 +29,18 @@ export default function LoginForm() {
         { email, password },
         { withCredentials: true }
       );
+
+      setTitle("Login Successful!");
+      setMessage("Redirecting to dashboard!");
+      setIconColor("currentColor"); // Restablecer el color al normal tras un login exitoso
+
       const { token } = response.data;
       document.cookie = `token=${token}; path=/; secure; sameSite=strict;`;
       router.push("/dashboard");
     } catch (error: any) {
-      setMessage(
-        `Login failed: ${error.response?.data?.message || "An error occurred"}`
-      );
-      // Create a toast or other UI component showing error in login
+      setIconColor("#ff2600"); // Cambiar los iconos a rojo tras un error de login
+      setTitle("Login Failed!");
+      setMessage(`${error.response?.data?.message || "An error occurred"}`);
     }
   };
 
@@ -47,9 +54,12 @@ export default function LoginForm() {
       </div>
       <form onSubmit={handleSubmit} className="grid gap-4">
         <div className="grid gap-2">
-          <div className="flex">
+          <div className="flex items-center">
+            {" "}
+            {/* Usamos items-center para centrar en el eje Y */}
             <Label htmlFor="email">Correo electrónico</Label>
-            <Mail className="ml-2 h-3.5 w-3.5" />
+            <Mail className={`ml-2 h-3.5 w-3.5 text-${iconColor}`} />{" "}
+            {/* Cambia el color del icono */}
           </div>
           <Input
             id="email"
@@ -62,9 +72,14 @@ export default function LoginForm() {
         </div>
         <div className="grid gap-2">
           <div className="flex items-center">
-            <div className="flex">
+            {" "}
+            {/* Usamos items-center aquí también */}
+            <div className="flex items-center">
               <Label htmlFor="password">Contraseña</Label>
-              <RectangleEllipsis className="ml-2 h-4 w-4.5" />
+              <RectangleEllipsis
+                className={`ml-2 h-4 w-4.5 text-${iconColor}`}
+              />{" "}
+              {/* Cambia el color del icono */}
             </div>
             <Link
               href={"/forgot-password"}
@@ -108,12 +123,15 @@ export default function LoginForm() {
           </Button>
         </div>
       </form>
-      {message && <p className="mt-4 text-center text-sm">{message}</p>}
       <div className="mt-4 text-center text-sm">
         ¿No tienes una cuenta?{" "}
         <Link href={"/register-student"} className="underline">
           Registrarse
         </Link>
+      </div>
+
+      <div className="fixed bottom-0 left-0 mb-4 ml-4 p-4 z-50">
+        {message && <LoginAlert message={message} title={resultTitle} />}
       </div>
     </>
   );
