@@ -39,6 +39,7 @@ import { LibraryBig, SquareUserRound } from "lucide-react";
 import NoContentBanner from "@/components/NoContent";
 import AttendanceSkeleton from "@/components/skeletons/AttendanceSkeleton";
 import { Separator } from "@/components/ui/separator";
+import CardSkeleton from "@/components/CardSkeleton";
 
 interface Class {
   id: string;
@@ -114,7 +115,13 @@ export function AttendanceComponent() {
   }, [user]);
 
   if (loading) {
-    return <AttendanceSkeleton />;
+    return (
+      <>
+        <div className="ml-6 mt-5 sm:text-left sm:ml-9 lg:ml-10 lg:mt-4 md:ml-10">
+          <AttendanceSkeleton />
+        </div>
+      </>
+    );
   }
 
   return (
@@ -170,7 +177,9 @@ export function AttendanceComponent() {
         }
       >
         {classes.length === 0 ? (
-          <NoContentBanner />
+          <>
+            <NoContentBanner />
+          </>
         ) : (
           classes.map((clase) => (
             <Card

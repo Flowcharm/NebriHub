@@ -1,6 +1,6 @@
 "use client";
 import axios from "axios";
-import { User, columns } from "./columns"; // Asegúrate que `User` esté correctamente definido para reflejar la estructura que recibes de la API
+import { User, columns } from "./columns";
 import { DataTable } from "./data-table";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
@@ -8,25 +8,34 @@ import { AsideMenu } from "@/components/AsideMenu";
 import Header from "@/components/Header";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import MemberCard from "@/components/MemberCard";
-import { UserProvider } from "@/context/UserContext";
+import { UserProvider, useUser } from "@/context/UserContext";
 
-// Función para hacer el fetch de los usuarios desde la API
-const fetchUsers = async () => {
+const fetchUsers = async (token: string, user: any) => {
   try {
-    const token = Cookies.get("token"); // Obtener el token JWT de las cookies
-    if (!token) {
-      throw new Error("Authentication token is missing");
+    if (!user || !user.role) {
+      console.error("User data is missing or role is not defined");
     }
-    // Hacer la petición GET con Axios, incluyendo el token en los headers
-    const response = await axios.get("http://localhost:3005/users", {
+
+    let endpoint = "http://localhost:3005/users"; // Default endpoint
+
+    // Conditional logic based on user role and classes
+    if (user.role === "teacher") {
+      endpoint = `http://localhost:3005/teachers/${user.id}/classes`;
+    } else if (user.role === "student") {
+      endpoint = `http://localhost:3005/students/${user.id}/classes`;
+    }
+
+    // Make the GET request with Axios, including the token in the headers
+    const response = await axios.get(endpoint, {
       headers: {
-        Authorization: `Bearer ${token}`, // Token JWT en los headers
+        Authorization: `Bearer ${token}`, // JWT token in the headers
       },
       withCredentials: true,
     });
-    return response.data; // Retorna los datos de los usuarios
+
+    return response.data; // Return the data (classes or users) based on the role
   } catch (error) {
-    console.error("Error fetching users:", error);
+    console.error("Error fetching data:", error);
     throw error;
   }
 };
@@ -51,25 +60,41 @@ export default function Members() {
 
 // Componente para mostrar la lista de usuarios
 export function MembersComponent() {
+  const { user } = useUser(); // Obtener el user desde el contexto
   const [data, setData] = useState<User[]>([]); // Estado para guardar los usuarios
   const [loading, setLoading] = useState(true); // Estado para manejar el loading
   const [error, setError] = useState<string | null>(null); // Estado para manejar errores
 
   useEffect(() => {
-    // Función que hará el fetch de los datos cuando el componente se monte
-    const getData = async () => {
+    // Verificar si el usuario está disponible antes de hacer la petición
+    if (!user) {
+      setError("User not authenticated");
+      setLoading(false);
+      return; // Exit early if user is not available
+    }
+
+    const token = Cookies.get("token"); // Obtener el token JWT de las cookies
+    if (!token) {
+      setError("Authentication token is missing");
+      setLoading(false);
+      return; // Exit early if token is not available
+    }
+
+    // Llamar directamente a la función fetchUsers
+    const fetchData = async () => {
       try {
-        const users = await fetchUsers(); // Llamar a la función que hace la petición a la API
+        const users = await fetchUsers(token, user); // Fetch the users based on token and user
         setData(users); // Guardar los usuarios en el estado
       } catch (error) {
-        setError("Error fetching users, please try again later"); // Manejar el error
+        setError("Error fetching users, please try again later");
+        console.log(error); // Manejar el error
       } finally {
         setLoading(false); // Quitar el loading después de la petición
       }
     };
 
-    getData(); // Ejecutar la función de fetch cuando el componente se monte
-  }, []);
+    fetchData(); // Ejecutar la función de fetch cuando el componente se monte
+  }, [user]); // Dependencia para ejecutar solo cuando el usuario esté disponible // Dependencia para ejecutar solo cuando el usuario esté disponible
 
   if (loading) {
     return <div>Loading...</div>; // Mostrar mensaje de carga

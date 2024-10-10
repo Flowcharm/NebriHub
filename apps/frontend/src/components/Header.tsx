@@ -45,7 +45,10 @@ import {
 } from "@/components/ui/sheet";
 import { usePathname } from "next/navigation";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useUser } from "@/context/UserContext"; // Importa el UserContext para acceder a los datos del usuario
+import { useUser } from "@/context/UserContext";
+import axios from "axios";
+import { router } from "next/client";
+import { Router, useRouter } from "next/router";
 
 const pathNameMap: { [key: string]: string } = {
   "/dashboard": "Panel de control",
@@ -62,6 +65,17 @@ function getPathNameInSpanish(pathname: string): string {
     pathNameMap[pathname] ||
     pathname.slice(1).charAt(0).toUpperCase() + pathname.slice(2)
   );
+}
+
+async function logout() {
+  try {
+    const response = await axios.post("http://localhost:3005/auth/logout"); // Adjust the endpoint URL as needed
+    if (response.status === 200) {
+      console.log(response.data.message); // "Logout successful"
+    }
+  } catch (error) {
+    console.error("Error logging out", error);
+  }
 }
 
 export default function Header() {
@@ -89,12 +103,19 @@ export default function Header() {
               <Home className="h-5 w-5 transition-all group-hover:scale-110" />
               <span className="sr-only">NebriHub</span>
             </Link>
-            <Link
+            {/*<Link
               href="/calendar"
               className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
             >
               <CalendarDays className="h-5 w-5" />
               Calendario
+            </Link>*/}
+            <Link
+              href="/attendance"
+              className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+            >
+              <School className="h-5 w-5" />
+              Asistencia
             </Link>
             <Link
               href="/projects"
@@ -109,13 +130,6 @@ export default function Header() {
             >
               <Users2 className="h-5 w-5" />
               Miembros
-            </Link>
-            <Link
-              href="/attendance"
-              className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-            >
-              <School className="h-5 w-5" />
-              Asistencia
             </Link>
             <Link
               href="/statistics"
@@ -194,16 +208,16 @@ export default function Header() {
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem>
-            <Cog className="h-5 w-5 m-1 mr-2" />
+            <Cog className="h-4 w-4 m-1 mr-2" />
             <p>Configuración</p>
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <CircleHelp className="h-5 w-5 m-1 mr-2" />
+            <CircleHelp className="h-4 w-4 m-1 mr-2" />
             <p>Ayuda</p>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>
-            <LogOut className="h-5 w-5 m-1 mr-2" />
+          <DropdownMenuItem onClick={logout}>
+            <LogOut className="h-4 w-4 m-1 mr-2" strokeWidth={2.5} />
             <p>Cerrar sesión</p>
           </DropdownMenuItem>
         </DropdownMenuContent>
